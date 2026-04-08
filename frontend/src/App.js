@@ -415,7 +415,7 @@ function CheckoutPage() {
     setMessage(
       emailSent
         ? "Order placed! Confirmation email sent."
-        : "Order placed! Email not sent. Add frontend .env EmailJS keys and restart frontend."
+        : "Order placed! Email not sent. Configure EmailJS environment variables for production and redeploy frontend."
     );
     setForm({ customerName: "", email: "", phone: "", address: "" });
   };
