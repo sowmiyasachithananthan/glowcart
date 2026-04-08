@@ -30,8 +30,24 @@ input, textarea, select { padding: 10px; border: 1px solid #ddd; border-radius: 
   top: 0;
   z-index: 1000;
 }
-.logo { font-weight: 700; font-size: 1.35rem; letter-spacing: .5px; color: #6e4b20; }
-.nav { display: flex; gap: 14px; flex-wrap: wrap; }
+.logo { display: inline-flex; align-items: center; }
+.logo-img { height: 70px; width: auto; display: block; }
+.nav { display: flex; gap: 20px; flex-wrap: wrap; }
+.nav a {
+  color: #3b2c1f;
+  font-weight: 600;
+  padding-bottom: 3px;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.nav a:hover {
+  color: #9f6b2f;
+  border-bottom-color: #d6b679;
+}
+.nav a.active {
+  color: #7c3d00;
+  border-bottom-color: #7c3d00;
+}
 .header-actions { display: flex; gap: 10px; }
 .header-actions a { background: #fff6ea; border: 1px solid #edd8ba; padding: 6px 10px; border-radius: 999px; }
 
