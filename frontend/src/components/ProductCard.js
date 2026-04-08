@@ -2,10 +2,17 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 function resolveImageSrc(src) {
+  const staticBase =
+    typeof window !== "undefined" && window.location.hostname.includes("github.io")
+      ? `/${window.location.pathname.split("/").filter(Boolean)[0] || ""}`
+      : (process.env.PUBLIC_URL || "");
+  const publicBase = staticBase.replace(/\/$/, "");
+  const cleanSrc = String(src || "").trim();
   if (!src) return "https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=900&q=80";
-  if (src.startsWith("http://") || src.startsWith("https://") || src.startsWith("data:")) return src;
-  if (src.startsWith("/")) return src;
-  return `/images/${src}`;
+  if (cleanSrc.startsWith("http://") || cleanSrc.startsWith("https://") || cleanSrc.startsWith("data:")) return cleanSrc;
+  if (cleanSrc.startsWith("/")) return `${publicBase}${cleanSrc}`;
+  if (cleanSrc.startsWith("images/")) return `${publicBase}/${cleanSrc}`;
+  return `${publicBase}/images/${cleanSrc}`;
 }
 
 function ProductCard({ product, onAddToCart, onToggleWishlist, isWishlisted }) {
