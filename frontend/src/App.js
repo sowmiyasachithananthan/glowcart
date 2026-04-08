@@ -13,7 +13,7 @@ import "./App.css";
 
 const API_BASE =
   process.env.REACT_APP_API_BASE ||
-  (typeof window !== "undefined" ? `${window.location.origin}/api` : "http://localhost:5000/api");
+  "http://localhost:5000/api";
 const ShopContext = createContext(null);
 
 function resolveImageSrc(src) {
@@ -634,7 +634,7 @@ function AppShell() {
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <AppShell />
     </BrowserRouter>
   );

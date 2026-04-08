@@ -5,7 +5,7 @@ function Header({ cartCount, wishlistCount }) {
   return (
     <header className="header">
       <Link to="/" className="logo">
-        <img src="/logo.png" alt="GlowCart" className="logo-img" />
+        <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="GlowCart" className="logo-img" />
       </Link>
       <nav className="nav">
         <NavLink to="/" end>Home</NavLink>
