@@ -1,4 +1,12 @@
 {
+  "name": "glowcart",
+  "private": true,
+  "scripts": {
+    "deploy": "npm --prefix frontend run build",
+    "build:frontend": "npm --prefix frontend run build",
+    "start:frontend": "npm --prefix frontend run start",
+    "start:backend": "npm --prefix backend run start"
+  },
   "dependencies": {
     "mongoose": "^7.8.9"
   }
