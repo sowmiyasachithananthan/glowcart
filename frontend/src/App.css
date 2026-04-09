@@ -303,10 +303,11 @@ input, textarea, select { padding: 10px; border: 1px solid #ddd; border-radius: 
   display: grid;
   grid-template-columns: 1.2fr 1fr 1fr;
   gap: 18px;
+  justify-items: center;
 }
 .footer-logo-img { height: 58px; width: auto; display: block; margin-bottom: 8px; }
-.footer-links { display: grid; gap: 8px; margin-top: 8px; justify-items: center; }
-.footer-links a { text-align: center; }
+.footer-links { display: grid; gap: 8px; margin-top: 8px; justify-items: start; }
+.footer-links a { text-align: left; }
 .copyright { max-width: 1100px; margin: 20px auto 0; color: #bfa888; font-size: .9rem; text-align: center; }
 
 .back-to-top {
