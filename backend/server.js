@@ -211,6 +211,11 @@ app.post("/api/orders", async (req, res) => {
   res.status(201).json(order);
 });
 
+app.get("/api/my-orders", userAuth, async (req, res) => {
+  const orders = await Order.find({ email: req.user.email }).sort({ createdAt: -1 });
+  res.json(orders);
+});
+
 app.post("/api/subscribers", async (req, res) => {
   const { email } = req.body;
   if (!email) return res.status(400).json({ message: "Email is required" });

@@ -7,6 +7,7 @@ import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import FAQPage from "./pages/FAQPage";
 import AccountPage from "./pages/AccountPage";
+import MyOrdersPage from "./pages/MyOrdersPage";
 import SkincarePage from "./pages/SkincarePage";
 import HairCarePage from "./pages/HairCarePage";
 import LipCarePage from "./pages/LipCarePage";
@@ -380,7 +381,19 @@ function WishlistPage() {
 
 function CheckoutPage() {
   const { cart, cartTotal, clearCart } = useShop();
-  const [form, setForm] = useState({ customerName: "", email: "", phone: "", address: "" });
+  const [form, setForm] = useState(() => {
+    try {
+      const authUser = JSON.parse(localStorage.getItem("authUser") || "null");
+      return {
+        customerName: authUser?.name || "",
+        email: authUser?.email || "",
+        phone: "",
+        address: "",
+      };
+    } catch (_) {
+      return { customerName: "", email: "", phone: "", address: "" };
+    }
+  });
   const [message, setMessage] = useState("");
 
   const handleOrder = async (e) => {
@@ -669,6 +682,7 @@ function AppShell() {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/wishlist" element={<WishlistPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/orders" element={<MyOrdersPage apiBase={API_BASE} />} />
         <Route path="/admin" element={<AdminPage />} />
       </Routes>
       <NewsletterSection />
