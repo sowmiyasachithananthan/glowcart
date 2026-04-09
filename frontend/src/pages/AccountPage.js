@@ -35,8 +35,12 @@ function AccountPage({ apiBase, user, setUser }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(login),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data?.message || "Login failed");
+      const contentType = res.headers.get("content-type") || "";
+      const data = contentType.includes("application/json") ? await res.json() : await res.text();
+      if (!res.ok) {
+        const msg = typeof data === "string" ? "Login failed (server error)" : (data?.message || "Login failed");
+        throw new Error(msg);
+      }
       saveSession(data);
     } catch (err) {
       setError(err.message);
@@ -55,8 +59,12 @@ function AccountPage({ apiBase, user, setUser }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(register),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data?.message || "Registration failed");
+      const contentType = res.headers.get("content-type") || "";
+      const data = contentType.includes("application/json") ? await res.json() : await res.text();
+      if (!res.ok) {
+        const msg = typeof data === "string" ? "Registration failed (server error)" : (data?.message || "Registration failed");
+        throw new Error(msg);
+      }
       saveSession(data);
     } catch (err) {
       setError(err.message);
