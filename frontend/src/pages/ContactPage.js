@@ -27,7 +27,7 @@ function ContactPage({ apiBase }) {
         <form className="form luxury-card" onSubmit={submitContact}>
           <input placeholder="Name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} required />
           <input type="email" placeholder="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} required />
-          <textarea rows="5" placeholder="Your message" value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} required />
+          <textarea rows="3" placeholder="Your message" value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} required />
           <button className="contact-submit" type="submit">Send Message</button>
           {status && <p className="muted">{status}</p>}
         </form>

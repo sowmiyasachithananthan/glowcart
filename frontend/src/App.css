@@ -304,8 +304,37 @@ input, textarea, select { padding: 10px; border: 1px solid #ddd; border-radius: 
   grid-template-columns: 1.2fr 1fr 1fr;
   gap: 18px;
 }
-.footer-links { display: grid; gap: 8px; margin-top: 8px; }
-.copyright { max-width: 1100px; margin: 20px auto 0; color: #bfa888; font-size: .9rem; }
+.footer-logo-img { height: 58px; width: auto; display: block; margin-bottom: 8px; }
+.footer-links { display: grid; gap: 8px; margin-top: 8px; justify-items: center; }
+.footer-links a { text-align: center; }
+.copyright { max-width: 1100px; margin: 20px auto 0; color: #bfa888; font-size: .9rem; text-align: center; }
+
+.back-to-top {
+  position: fixed;
+  right: 18px;
+  bottom: 22px;
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #9f6b2f, #d6b679);
+  color: #fff;
+  box-shadow: 0 18px 34px rgba(123, 90, 50, 0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 1002;
+}
+.back-to-top:active { transform: translateY(1px); }
+
+.contact-layout form input,
+.contact-layout form textarea {
+  padding: 8px 12px;
+}
+.contact-layout form textarea {
+  min-height: 110px;
+}
 
 @media (max-width: 768px) {
   .header { align-items: center; justify-content: space-between; flex-wrap: wrap; }
@@ -353,6 +382,11 @@ input, textarea, select { padding: 10px; border: 1px solid #ddd; border-radius: 
   .details-media { position: static; }
   .details-main-image { max-width: 100%; max-height: 360px; }
   .thumb-btn img { width: 60px; height: 60px; }
+}
+
+@media (max-width: 480px) {
+  .back-to-top { right: 12px; bottom: 18px; width: 42px; height: 42px; font-size: 20px; }
+  .contact-layout form textarea { min-height: 90px; }
 }
 
 @media (max-width: 992px) {

@@ -590,9 +590,24 @@ function BasicPage({ title, text }) {
 function AppShell() {
   const [cart, setCart] = useState(() => JSON.parse(localStorage.getItem("cart") || "[]"));
   const [wishlist, setWishlist] = useState(() => JSON.parse(localStorage.getItem("wishlist") || "[]"));
+  const location = useLocation();
+  const [showBackToTop, setShowBackToTop] = useState(false);
 
   useEffect(() => localStorage.setItem("cart", JSON.stringify(cart)), [cart]);
   useEffect(() => localStorage.setItem("wishlist", JSON.stringify(wishlist)), [wishlist]);
+
+  // Reset scroll position when navigating between pages.
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  // Show back-to-top button after scrolling.
+  useEffect(() => {
+    const onScroll = () => setShowBackToTop(window.scrollY > 450);
+    window.addEventListener("scroll", onScroll);
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const addToCart = (product, quantity = 1) => {
     setCart((prev) => {
@@ -635,6 +650,11 @@ function AppShell() {
       </Routes>
       <NewsletterSection />
       <Footer />
+      {showBackToTop ? (
+        <button className="back-to-top" type="button" onClick={() => window.scrollTo(0, 0)} aria-label="Back to top">
+          ↑
+        </button>
+      ) : null}
     </ShopContext.Provider>
   );
 }

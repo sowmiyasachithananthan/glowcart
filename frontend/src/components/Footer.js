@@ -6,7 +6,7 @@ function Footer() {
     <footer className="footer">
       <div className="footer-grid">
         <div>
-          <h3>GlowCart</h3>
+          <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="GlowCart" className="footer-logo-img" />
           <p className="muted">Luxury beauty rituals for skin, hair, and lips.</p>
         </div>
         <div>
