@@ -122,6 +122,17 @@ function userAuth(req, res, next) {
   }
 }
 
+function getUserFromAuthHeader(req) {
+  try {
+    const auth = req.headers.authorization || "";
+    const token = auth.startsWith("Bearer ") ? auth.slice(7) : "";
+    if (!token) return null;
+    return jwt.verify(token, JWT_SECRET);
+  } catch (_) {
+    return null;
+  }
+}
+
 app.post("/api/admin/login", (req, res) => {
   const { email, password } = req.body;
   if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
@@ -207,12 +218,16 @@ app.delete("/api/products/:id", adminAuth, async (req, res) => {
 });
 
 app.post("/api/orders", async (req, res) => {
-  const order = await Order.create(req.body);
+  const authUser = getUserFromAuthHeader(req);
+  const payload = { ...req.body };
+  payload.email = String(authUser?.email || payload.email || "").toLowerCase().trim();
+  const order = await Order.create(payload);
   res.status(201).json(order);
 });
 
 app.get("/api/my-orders", userAuth, async (req, res) => {
-  const orders = await Order.find({ email: req.user.email }).sort({ createdAt: -1 });
+  const email = String(req.user.email || "").toLowerCase().trim();
+  const orders = await Order.find({ email }).sort({ createdAt: -1 });
   res.json(orders);
 });
 

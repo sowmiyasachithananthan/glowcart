@@ -405,9 +405,13 @@ function CheckoutPage() {
       total: cartTotal,
       items: cart.map((i) => ({ productId: i._id, name: i.name, price: i.price, quantity: i.quantity, image: i.images?.[0] || "" })),
     };
+    const token = localStorage.getItem("authToken");
     const res = await fetch(`${API_BASE}/orders`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
       body: JSON.stringify(payload),
     });
     if (!res.ok) return setMessage("Order failed. Try again.");
