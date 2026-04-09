@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import FAQPage from "./pages/FAQPage";
+import AccountPage from "./pages/AccountPage";
 import SkincarePage from "./pages/SkincarePage";
 import HairCarePage from "./pages/HairCarePage";
 import LipCarePage from "./pages/LipCarePage";
@@ -590,11 +591,32 @@ function BasicPage({ title, text }) {
 function AppShell() {
   const [cart, setCart] = useState(() => JSON.parse(localStorage.getItem("cart") || "[]"));
   const [wishlist, setWishlist] = useState(() => JSON.parse(localStorage.getItem("wishlist") || "[]"));
+  const [user, setUser] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("authUser") || "null");
+    } catch (_) {
+      return null;
+    }
+  });
   const location = useLocation();
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   useEffect(() => localStorage.setItem("cart", JSON.stringify(cart)), [cart]);
   useEffect(() => localStorage.setItem("wishlist", JSON.stringify(wishlist)), [wishlist]);
+  useEffect(() => localStorage.setItem("authUser", JSON.stringify(user)), [user]);
+
+  // Restore session from token (optional) on first load.
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (!token || user) return;
+    fetch(`${API_BASE}/auth/me`, { headers: { Authorization: `Bearer ${token}` } })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((me) => {
+        if (me) setUser({ _id: me._id, name: me.name, email: me.email });
+      })
+      .catch(() => {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Reset scroll position when navigating between pages.
   useEffect(() => {
@@ -630,7 +652,7 @@ function AppShell() {
 
   return (
     <ShopContext.Provider value={value}>
-      <Header cartCount={cartCount} wishlistCount={wishlist.length} />
+      <Header cartCount={cartCount} wishlistCount={wishlist.length} user={user} />
       <PageBanner />
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -641,6 +663,7 @@ function AppShell() {
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/contact" element={<ContactPage apiBase={API_BASE} />} />
+        <Route path="/account" element={<AccountPage apiBase={API_BASE} user={user} setUser={setUser} />} />
         <Route path="/privacy" element={<BasicPage title="Privacy Policy" text="Your data is kept secure and used only for order processing." />} />
         <Route path="/terms" element={<BasicPage title="Terms & Conditions" text="By ordering, you agree to our shipping and return terms." />} />
         <Route path="/cart" element={<CartPage />} />

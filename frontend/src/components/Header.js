@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
-function Header({ cartCount, wishlistCount }) {
+function Header({ cartCount, wishlistCount, user }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -41,6 +41,7 @@ function Header({ cartCount, wishlistCount }) {
       </nav>
 
       <div className={`header-actions ${menuOpen ? "open" : ""}`}>
+        <Link to="/account" onClick={closeMenu}>{user ? `👤 ${user.name.split(" ")[0]}` : "Login"}</Link>
         <Link to="/wishlist" onClick={closeMenu}>❤️ {wishlistCount}</Link>
         <Link to="/cart" onClick={closeMenu}>🛒 {cartCount}</Link>
       </div>

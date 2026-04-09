@@ -248,6 +248,23 @@ input, textarea, select { padding: 10px; border: 1px solid #ddd; border-radius: 
 .page-link-card { display: block; transition: transform .2s ease; }
 .page-link-card:hover { transform: translateY(-4px); }
 .testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.account-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.tab-btn {
+  background: #fff6ea;
+  color: #3b2c1f;
+  border: 1px solid #edd8ba;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+.tab-btn.active {
+  background: linear-gradient(135deg, #9f6b2f, #d6b679);
+  color: #fff;
+  border-color: transparent;
+}
+.account-panel p { margin: 8px 0; }
+.account-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; align-items: center; }
+.account-actions a { background: #fff6ea; border: 1px solid #edd8ba; padding: 8px 12px; border-radius: 999px; }
 .about-image-wrap {
   border-radius: 16px;
   overflow: hidden;
